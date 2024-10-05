@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Antibush - Juegos Gratis para Todos</title>
+    <style>
+      /* Estilos generales */
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #1b2838;
+        color: #c7d5e0;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background-color: rgba(23, 26, 33, 0.9);
+        padding: 1rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+      .logo img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+      }
+      .logo h1 {
+        font-size: 1.5em;
+        color: #66c0f4;
+        margin: 0;
+      }
+      nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+      }
+      nav ul li {
+        margin: 0 10px;
+      }
+      nav ul li a {
+        color: #8a1d98;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+      nav ul li a:hover {
+        color: #66c0f4;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .hero h2 {
+        font-size: 3.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        position: relative;
+        z-index: 1;
+        animation: fadeInUp 1s ease-out;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 40px;
+      }
+      .feature {
+        flex-basis: calc(33.333% - 20px);
+        background-color: #16202d;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+      }
+      .feature:hover {
+        transform: translateY(-5px);
+      }
+      .feature h3 {
+        color: #66c0f4;
+      }
+
+      .cta {
+        text-align: center;
+        margin-top: 40px;
+        padding: 40px;
+        background-color: #16202d;
+        border-radius: 8px;
+      }
+      .cta-button {
+        display: inline-block;
+        background-color: #66c0f4;
+        color: #171a21;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+      .cta-button:hover {
+        background-color: #4da5d8;
+      }
+
+      .featured-games {
+        margin-top: 40px;
+      }
+      .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+      .game-card {
+        background-color: #16202d;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+      }
+      .game-card:hover {
+        transform: scale(1.05);
+      }
+      .game-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+      }
+      .game-info {
+        padding: 10px;
+      }
+      .game-title {
+        font-weight: bold;
+        color: #c7d5e0;
+      }
+
+      footer {
+        background-color: #171a21;
+        color: #c7d5e0;
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          align-items: center;
+        }
+        nav {
+          margin-top: 1rem;
+        }
+        .features {
+          flex-direction: column;
+        }
+        .feature {
+          flex-basis: 100%;
+        }
+        .hero h2 {
+          font-size: 2.5em;
+        }
+        .game-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+      }
+      .game-card {
+        position: relative;
+      }
+      .game-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+        text-decoration: none;
+      }
+      .game-card:hover .game-link {
+        opacity: 1;
+      }
+
+      /* Estilos para la lista de juegos */
+      .game-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px;
+      }
+      .game-card {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .game-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+      }
+      .game-info {
+        padding: 10px;
+      }
+      .game-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .game-category {
+        font-size: 0.8em;
+        color: #666;
+      }
+      .favorite {
+        cursor: pointer;
+        float: right;
+        font-size: 1.2em;
+      }
+      .favorite.active {
+        color: gold;
+      }
+      .play-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .play-button:hover {
+        background-color: #45a049;
+      }
+      #games {
+        margin-top: 80px; /* Ajustar el margen superior */
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5eeea355389655.59822ff824b72.gif"
+          alt="Antibush Logo"
+        />
+        <h1>Antibush</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="listaJuegos.html">Juegos</a></li>
+          <li><a href="registro.html">Registro</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <section id="games" style="margin-top: 80px">
+        <h2>Nuestros Juegos</h2>
+        <div id="category-filter">
+          <label for="category">Filtrar por categoría:</label>
+          <select id="category">
+            <option value="all">Todos</option>
+            <option value="action">Acción</option>
+            <option value="adventure">Aventura</option>
+            <option value="Sport">Sport</option>
+            <option value="free to play">free to play</option>
+          </select>
+        </div>
+        <div class="game-list" id="game-list"></div>
+      </section>
+    </div>
+    <footer>
+      <p>&copy; 2024 Antibush. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+      const games = [
+        {
+          id: 1,
+          title: "Fantasma",
+          category: "free to play",
+          image: "https://art.pixilart.com/37f719b8a62f06d.gif",
+          gameUrl: "gusano.html",
+        },
+        {
+          id: 2,
+          title: "Harry Potter",
+          category: "free to play",
+          image:
+            "https://c.tenor.com/qt8yMpX9F7gAAAAC/harry-potter-slytherin.gif",
+          gameUrl: "juegospotter.html",
+        },
+        {
+          id: 3,
+          title: "Carrera Extrema",
+          category: "action",
+          image:
+            "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c3f78555389655.59822ff823efc.gif",
+          gameUrl: "carrera-extrema.html",
+        },
+        {
+          id: 4,
+          title: "Carrera de Disney",
+          category: "action",
+          image:
+            "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5eeea355389655.59822ff824b72.gif",
+          gameUrl: "mision-imposible.html",
+        },
+        {
+          id: 5,
+          title: "plantas assasin",
+          category: "Sport",
+          image:
+            "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/b0097955389655.59822ff8248a7.gif",
+          gameUrl: "laberinto-3d.html",
+        },
+        {
+          id: 6,
+          title: "Explorador del Tiempo",
+          category: "adventure",
+          image: "https://media.giphy.com/media/3o7aCRloybJlXpNjSU/giphy.gif",
+          gameUrl: "explorador-tiempo.html",
+        },
+        {
+          id: 7,
+          title: "Dota",
+          category: "Sport",
+          image: "https://i.makeagif.com/media/3-14-2018/FVXZkc.gif",
+          gameUrl: "laberinto-3d.html",
+        },
+      ];
+
+      function loadGames(category = "all") {
+        const gameList = document.getElementById("game-list");
+        gameList.innerHTML = "";
+        games.forEach((game) => {
+          if (category === "all" || game.category === category) {
+            const gameCard = document.createElement("div");
+            gameCard.className = "game-card";
+            gameCard.innerHTML = `
+              <img src="${game.image}" alt="${game.title}">
+              <div class="game-info">
+                <span class="game-title">${game.title}</span>
+                <span class="game-category">${game.category}</span>
+                <span class="favorite" onclick="toggleFavorite(this)">☆</span>
+              </div>
+              <button class="play-button" onclick="playGame('${game.gameUrl}')">Entrar al juego</button>
+            `;
+            gameList.appendChild(gameCard);
+          }
+        });
+      }
+
+      function toggleFavorite(element) {
+        element.classList.toggle("active");
+        element.textContent = element.classList.contains("active") ? "★" : "☆";
+      }
+
+      function playGame(gameUrl) {
+        window.location.href = gameUrl;
+      }
+
+      document.getElementById("category").addEventListener("change", (e) => {
+        loadGames(e.target.value);
+      });
+
+      loadGames();
+    </script>
+  </body>
+</html>
